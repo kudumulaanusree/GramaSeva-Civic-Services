@@ -10,6 +10,12 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: schemes
+    description: Government scheme discovery
+  - name: citizen-tools
+    description: Eligibility and assistant guidance
+  - name: admin
+    description: Demo scheme administration
 paths:
   /healthz:
     get:
@@ -24,6 +30,251 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /schemes:
+    get:
+      operationId: listSchemes
+      tags: [schemes]
+      summary: List active schemes
+      parameters:
+        - in: query
+          name: q
+          schema: { type: string }
+        - in: query
+          name: category
+          schema: { type: string }
+        - in: query
+          name: sort
+          schema: { type: string, enum: [relevance, name] }
+      responses:
+        "200":
+          description: Schemes
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/Scheme" }
+  /schemes/search:
+    get:
+      operationId: searchSchemes
+      tags: [schemes]
+      summary: Search schemes
+      parameters:
+        - in: query
+          name: q
+          required: true
+          schema: { type: string, minLength: 1 }
+      responses:
+        "200":
+          description: Matching schemes
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/Scheme" }
+  /schemes/{id}:
+    get:
+      operationId: getScheme
+      tags: [schemes]
+      summary: Get scheme details
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: Scheme
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Scheme" }
+        "404": { description: Scheme not found }
+  /categories:
+    get:
+      operationId: getCategories
+      tags: [schemes]
+      summary: List scheme categories
+      responses:
+        "200":
+          description: Categories and active scheme counts
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/Category" }
+  /schemes/category/{category}:
+    get:
+      operationId: getSchemesByCategory
+      tags: [schemes]
+      summary: List schemes in a category
+      parameters:
+        - in: path
+          name: category
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: Matching schemes
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/Scheme" }
+  /eligibility/check:
+    post:
+      operationId: checkEligibility
+      tags: [citizen-tools]
+      summary: Find potentially relevant schemes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/EligibilityInput" }
+      responses:
+        "200":
+          description: Ranked scheme guidance
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/EligibilityMatch" }
+  /assistant/query:
+    post:
+      operationId: askAssistant
+      tags: [citizen-tools]
+      summary: Search scheme information using a natural-language question
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/AssistantInput" }
+      responses:
+        "200":
+          description: Database-backed answer and relevant schemes
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/AssistantResponse" }
+  /reports:
+    post:
+      operationId: reportSchemeInformation
+      tags: [citizen-tools]
+      summary: Report potentially outdated scheme information
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/ReportInput" }
+      responses:
+        "201":
+          description: Report received
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ReportResponse" }
+  /admin/summary:
+    get:
+      operationId: getAdminSummary
+      tags: [admin]
+      summary: Summarize scheme records for the demo admin
+      responses:
+        "200":
+          description: Admin summary
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/AdminSummary" }
+  /admin/auth/session:
+    get:
+      operationId: getAdminSession
+      tags: [admin]
+      summary: Check the current demo admin session
+      responses:
+        "200":
+          description: Session status
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/AdminSession" }
+    post:
+      operationId: loginAdmin
+      tags: [admin]
+      summary: Start a demo admin session
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/AdminLoginInput" }
+      responses:
+        "200":
+          description: Session started
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/AdminSession" }
+        "401": { description: Invalid demo password }
+    delete:
+      operationId: logoutAdmin
+      tags: [admin]
+      summary: End the current demo admin session
+      responses:
+        "204": { description: Session ended }
+  /admin/schemes:
+    get:
+      operationId: listAdminSchemes
+      tags: [admin]
+      summary: List all schemes for the demo admin
+      responses:
+        "200":
+          description: All scheme records
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/Scheme" }
+    post:
+      operationId: createScheme
+      tags: [admin]
+      summary: Add a scheme
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/SchemeInput" }
+      responses:
+        "201":
+          description: Created scheme
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Scheme" }
+  /admin/schemes/{id}:
+    put:
+      operationId: updateScheme
+      tags: [admin]
+      summary: Update a scheme
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/SchemeInput" }
+      responses:
+        "200":
+          description: Updated scheme
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Scheme" }
+        "404": { description: Scheme not found }
+    delete:
+      operationId: deactivateScheme
+      tags: [admin]
+      summary: Deactivate a scheme
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        "204": { description: Scheme deactivated }
+        "404": { description: Scheme not found }
 components:
   schemas:
     HealthStatus:
@@ -33,4 +284,136 @@ components:
           type: string
       required:
         - status
+    Scheme:
+      type: object
+      required: [id, name, nameTe, nameHi, summary, summaryTe, summaryHi, description, descriptionTe, descriptionHi, category, benefits, eligibilitySummary, documents, applicationSteps, officialUrl, sourceType, lastUpdated, keywords, active]
+      properties:
+        id: { type: string }
+        name: { type: string }
+        nameTe: { type: string }
+        nameHi: { type: string }
+        summary: { type: string }
+        summaryTe: { type: string }
+        summaryHi: { type: string }
+        description: { type: string }
+        descriptionTe: { type: string }
+        descriptionHi: { type: string }
+        category: { type: string }
+        benefits:
+          type: array
+          items: { type: string }
+        eligibilitySummary: { type: string }
+        documents:
+          type: array
+          items: { type: string }
+        applicationSteps:
+          type: array
+          items: { type: string }
+        officialUrl: { type: ["string", "null"] }
+        sourceType: { type: string, enum: [demo, verified] }
+        lastUpdated: { type: string }
+        keywords:
+          type: array
+          items: { type: string }
+        active: { type: boolean }
+    SchemeInput:
+      type: object
+      required: [name, nameTe, nameHi, summary, summaryTe, summaryHi, description, descriptionTe, descriptionHi, category, benefits, eligibilitySummary, documents, applicationSteps, sourceType, keywords]
+      properties:
+        name: { type: string, minLength: 1, maxLength: 180 }
+        nameTe: { type: string }
+        nameHi: { type: string }
+        summary: { type: string, minLength: 1, maxLength: 500 }
+        summaryTe: { type: string }
+        summaryHi: { type: string }
+        description: { type: string }
+        descriptionTe: { type: string }
+        descriptionHi: { type: string }
+        category: { type: string, minLength: 1, maxLength: 100 }
+        benefits: { type: array, items: { type: string } }
+        eligibilitySummary: { type: string }
+        documents: { type: array, items: { type: string } }
+        applicationSteps: { type: array, items: { type: string } }
+        officialUrl: { type: ["string", "null"] }
+        sourceType: { type: string, enum: [demo, verified] }
+        lastUpdated: { type: string }
+        keywords: { type: array, items: { type: string } }
+        active: { type: boolean }
+    Category:
+      type: object
+      required: [id, label, icon, count]
+      properties:
+        id: { type: string }
+        label: { type: string }
+        icon: { type: string }
+        count: { type: integer }
+    EligibilityInput:
+      type: object
+      properties:
+        age: { type: integer, minimum: 0, maximum: 120 }
+        gender: { type: string }
+        state: { type: string }
+        rural: { type: boolean }
+        occupation: { type: string }
+        annualIncome: { type: number, minimum: 0 }
+        farmer: { type: boolean }
+        student: { type: boolean }
+        disability: { type: boolean }
+        seniorCitizen: { type: boolean }
+        housingNeed: { type: boolean }
+        employmentStatus: { type: string }
+        language: { type: string, enum: [en, te, hi] }
+    EligibilityMatch:
+      type: object
+      required: [scheme, relevance, reasons]
+      properties:
+        scheme: { $ref: "#/components/schemas/Scheme" }
+        relevance: { type: integer }
+        reasons:
+          type: array
+          items: { type: string }
+    AssistantInput:
+      type: object
+      required: [message, language]
+      properties:
+        message: { type: string, minLength: 1, maxLength: 1000 }
+        language: { type: string, enum: [en, te, hi] }
+    AssistantResponse:
+      type: object
+      required: [answer, schemes]
+      properties:
+        answer: { type: string }
+        schemes:
+          type: array
+          items: { $ref: "#/components/schemas/Scheme" }
+    ReportInput:
+      type: object
+      required: [schemeId, message]
+      properties:
+        schemeId: { type: string }
+        message: { type: string, minLength: 3, maxLength: 1000 }
+    ReportResponse:
+      type: object
+      required: [id, received]
+      properties:
+        id: { type: integer }
+        received: { type: boolean }
+    AdminSummary:
+      type: object
+      required: [total, active, categories]
+      properties:
+        total: { type: integer }
+        active: { type: integer }
+        categories: { type: integer }
+    AdminLoginInput:
+      type: object
+      required: [password]
+      properties:
+        password: { type: string, minLength: 1, maxLength: 200 }
+    AdminSession:
+      type: object
+      required: [authenticated, demoMode]
+      properties:
+        authenticated: { type: boolean }
+        demoMode: { type: boolean }
 

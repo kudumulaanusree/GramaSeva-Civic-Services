@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "GramaSeva"
+description = "A multilingual civic-services application that helps rural citizens discover government schemes, understand eligibility and documents, and find application guidance."
+version = "1.0.0"
+id = "artifacts/gramaseva"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23032
+
+[services.development]
+run = "pnpm --filter @workspace/gramaseva run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/gramaseva", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/gramaseva/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23032"
+BASE_PATH = "/"

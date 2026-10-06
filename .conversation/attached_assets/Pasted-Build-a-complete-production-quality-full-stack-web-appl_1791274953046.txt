@@ -1,0 +1,1032 @@
+Build a complete, production-quality full-stack web application called "GramaSeva" based on this problem statement:
+
+"Create a simple multilingual platform providing rural citizens with information about government services and programs."
+
+IMPORTANT:
+This is a Build to Ship hackathon project. Do not create only a static landing page or a mockup. Build a functional, responsive, polished full-stack application with working navigation, search, filters, multilingual support, scheme details, eligibility checking, and an AI-style assistant interface.
+
+==================================================
+1. PROJECT GOAL
+==================================================
+
+GramaSeva is a citizen-friendly multilingual platform designed for rural citizens.
+
+The platform should make government schemes and services easier to:
+
+- Discover
+- Understand
+- Search
+- Compare
+- Check eligibility
+- Learn required documents
+- Understand application steps
+- Access official links
+- Ask questions in natural language
+- Use in regional languages
+
+The target users are:
+- Farmers
+- Students
+- Women
+- Senior citizens
+- Rural workers
+- Job seekers
+- Low digital-literacy users
+- General rural citizens
+
+The application must be extremely simple to use.
+
+==================================================
+2. TECHNOLOGY STACK
+==================================================
+
+Use:
+
+Frontend:
+- React
+- Vite
+- Tailwind CSS
+- React Router
+- Lucide React icons
+
+Backend:
+- Node.js
+- Express.js
+
+Database:
+- SQLite
+
+Use REST APIs between frontend and backend.
+
+Keep the code modular and maintainable.
+
+Create:
+- frontend/
+- backend/
+
+Use environment variables where required.
+
+Create proper README.md with complete setup instructions.
+
+==================================================
+3. DESIGN REQUIREMENTS
+==================================================
+
+Create a modern, clean, trustworthy government-service style UI.
+
+Design principles:
+- Simple
+- Accessible
+- Mobile-first
+- Large readable text
+- High contrast
+- Clear buttons
+- Minimal complexity
+- Suitable for people with low digital literacy
+
+Use a professional color palette inspired by:
+- Green
+- White
+- Light cream
+- Subtle blue accents
+
+Do NOT make the website look like a generic AI dashboard.
+
+The design should feel like a real citizen-service platform.
+
+Use:
+- Rounded cards
+- Soft shadows
+- Clean spacing
+- Large icons
+- Clear typography
+- Responsive layouts
+- Accessible forms
+- Empty states
+- Loading states
+- Error states
+- Toast notifications where appropriate
+
+==================================================
+4. WEBSITE BRANDING
+==================================================
+
+Application name:
+
+GRAMASEVA
+
+Tagline:
+
+"Government Services, Made Simple."
+
+Secondary tagline:
+
+"Know your benefits. Check your eligibility. Access government services."
+
+Logo concept:
+- Village/home icon
+- Leaf/agriculture element
+- Simple government-service identity
+
+Use a simple text/icon logo instead of requiring an external logo image.
+
+==================================================
+5. NAVIGATION
+==================================================
+
+Create a responsive navbar.
+
+Navbar:
+
+Logo:
+🌾 GramaSeva
+
+Navigation:
+- Home
+- Schemes
+- Categories
+- Eligibility Checker
+- Assistant
+- About
+
+Right side:
+- Language selector
+- Accessibility button
+- Login/Profile button
+
+Mobile:
+Use hamburger menu.
+
+==================================================
+6. LANGUAGES
+==================================================
+
+The platform MUST support:
+
+1. English
+2. Telugu
+3. Hindi
+
+Create a language selector.
+
+Example:
+
+English
+తెలుగు
+हिन्दी
+
+Changing the language should update:
+- Navigation
+- Headings
+- Buttons
+- Search placeholders
+- Category labels
+- Important interface text
+- Scheme information where translations are available
+
+Do NOT reload the page when changing language.
+
+Use a centralized translation object/file.
+
+Structure translations cleanly so more Indian languages can be added later.
+
+==================================================
+7. HOME PAGE
+==================================================
+
+Create an attractive hero section.
+
+Heading:
+
+"Government Services, Made Simple."
+
+Description:
+
+"Find government schemes, check eligibility, understand required documents, and learn how to apply — all in your language."
+
+Primary button:
+
+"Explore Schemes"
+
+Secondary button:
+
+"Check Eligibility"
+
+Hero should include a friendly rural India illustration using CSS/HTML icons or safe open-source iconography.
+
+Do NOT depend on random external image URLs.
+
+==================================================
+8. QUICK ACTIONS
+==================================================
+
+Below hero, create four large action cards:
+
+1. 🔍 Find a Scheme
+2. ✅ Check Eligibility
+3. 🎤 Ask Assistant
+4. 📄 Required Documents
+
+Each card should navigate to its respective functionality.
+
+==================================================
+9. CATEGORY SECTION
+==================================================
+
+Create government service categories.
+
+Categories:
+
+🌾 Agriculture
+🎓 Education
+🏥 Health
+🏠 Housing
+💼 Employment
+👩 Women & Child Welfare
+👴 Pension & Social Security
+💰 Financial Support
+🧑‍🎓 Scholarships
+🛠️ Skill Development
+
+Each category should be clickable.
+
+Clicking a category should show schemes belonging to that category.
+
+==================================================
+10. SCHEME DATABASE
+==================================================
+
+Create a SQLite database.
+
+Create a schemes table with fields similar to:
+
+id
+name
+short_description
+description
+category
+benefits
+eligibility
+documents
+application_steps
+official_url
+language_en
+language_te
+language_hi
+is_active
+created_at
+
+Populate the database with realistic example government schemes.
+
+Include examples such as:
+
+- PM-KISAN
+- Pradhan Mantri Awas Yojana - Gramin
+- Ayushman Bharat
+- National Scholarship related schemes
+- MGNREGA
+- PM Ujjwala Yojana
+- Social security/pension examples
+- Skill development schemes
+
+IMPORTANT:
+Clearly label demo/sample data where appropriate.
+
+Do not invent fake government application URLs.
+
+If an official URL is unavailable, show:
+"Visit your nearest government service center for application assistance."
+
+==================================================
+11. SCHEME LIST PAGE
+==================================================
+
+Create /schemes.
+
+Features:
+
+- Search schemes
+- Category filter
+- Language filter
+- Sort options
+- Scheme cards
+- Pagination or load more
+- Clear filters
+
+Search should work for:
+- Scheme name
+- Category
+- Description
+- Keywords
+
+Example:
+
+User searches:
+
+"farmer"
+
+Show agriculture-related schemes.
+
+User searches:
+
+"education"
+
+Show education schemes.
+
+==================================================
+12. SCHEME CARD
+==================================================
+
+Each card should show:
+
+Category icon
+
+Scheme name
+
+Short description
+
+"Who is it for?"
+
+Basic benefit
+
+Buttons:
+
+"View Details"
+
+"Check Eligibility"
+
+Do not overcrowd the card.
+
+==================================================
+13. SCHEME DETAILS PAGE
+==================================================
+
+Create:
+
+/schemes/:id
+
+Show:
+
+- Scheme name
+- Category
+- Overview
+- Benefits
+- Eligibility
+- Required documents
+- Application steps
+- Important information
+- Official website/application link
+- Last updated information
+- Related schemes
+
+Use tabs or sections:
+
+Overview
+Benefits
+Eligibility
+Documents
+How to Apply
+
+Add:
+
+"Check if I am eligible"
+
+button.
+
+==================================================
+14. ELIGIBILITY CHECKER
+==================================================
+
+Create:
+
+/eligibility
+
+Build a simple multi-step eligibility form.
+
+Questions:
+
+1. Age
+2. Gender
+3. State
+4. Rural/Urban
+5. Occupation
+6. Annual income
+7. Farmer?
+8. Student?
+9. Disability status (optional)
+10. Senior citizen?
+11. Housing need?
+12. Employment status
+
+Do not collect unnecessary sensitive personal information.
+
+After submission:
+
+Show:
+
+"Potentially relevant schemes for you"
+
+Rank schemes based on matching criteria.
+
+Example:
+
+User:
+Occupation = Farmer
+Rural = Yes
+
+Show agriculture schemes first.
+
+Each result should display:
+
+- Scheme
+- Why it may be relevant
+- Eligibility summary
+- View Details
+
+Include a disclaimer:
+
+"Eligibility shown here is an initial guidance only. Final eligibility is determined by the concerned government department."
+
+==================================================
+15. AI-STYLE ASSISTANT
+==================================================
+
+Create:
+
+/assistant
+
+Build a friendly chatbot interface.
+
+Header:
+
+"GramaSeva Assistant"
+
+Subtitle:
+
+"Ask about government schemes and services."
+
+Example questions:
+
+"Which schemes are available for farmers?"
+
+"What documents do I need?"
+
+"Are there education schemes for students?"
+
+"How can I apply for housing assistance?"
+
+"నాకు రైతు పథకాలు కావాలి"
+
+"छात्रों के लिए कौन सी योजनाएं हैं?"
+
+The assistant should search the scheme database and return relevant information.
+
+IMPORTANT:
+For the initial MVP, implement a reliable database-backed assistant/search system rather than pretending that an LLM knows government information.
+
+If an AI API environment variable is available, create an optional AI integration.
+
+Use:
+
+OPENAI_API_KEY
+
+only if available.
+
+If the API key is not available, automatically fall back to database search.
+
+Never expose API keys to the frontend.
+
+Assistant response should contain:
+
+- Relevant scheme
+- Short explanation
+- Eligibility
+- Documents
+- Application information
+- Official link if available
+
+==================================================
+16. VOICE SUPPORT
+==================================================
+
+Add a microphone button to the assistant.
+
+If browser Web Speech API is supported:
+
+- Allow speech-to-text.
+- Support English.
+- Support Telugu where browser support exists.
+- Support Hindi where browser support exists.
+
+If unsupported:
+
+Show a friendly message instead of breaking the application.
+
+Also provide a text-to-speech button for assistant responses.
+
+==================================================
+17. MULTILINGUAL SCHEME CONTENT
+==================================================
+
+For important schemes, provide translations.
+
+Example:
+
+English:
+PM-KISAN
+
+Telugu:
+పీఎం-కిసాన్
+
+Hindi:
+पीएम-किसान
+
+Descriptions should also have translated versions where practical.
+
+If a translation is unavailable, gracefully fall back to English.
+
+==================================================
+18. OFFICIAL INFORMATION SAFETY
+==================================================
+
+Government information can change.
+
+Therefore:
+
+- Display "Information may change. Verify with the official government department."
+- Show official source/application link only when verified.
+- Never claim guaranteed eligibility.
+- Never invent benefits, amounts, deadlines, or URLs.
+- Include "Last updated" field.
+- Provide "Report outdated information" button.
+
+==================================================
+19. ACCESSIBILITY
+==================================================
+
+This is extremely important because the target audience may have low digital literacy.
+
+Add:
+
+- Large text option
+- High contrast mode
+- Keyboard accessibility
+- ARIA labels
+- Visible focus states
+- Large clickable buttons
+- Simple language
+- Icons + text together
+- Screen-reader friendly structure
+
+Create an accessibility control in the navbar.
+
+==================================================
+20. USER FLOW
+==================================================
+
+Main user flow:
+
+HOME
+ ↓
+Select Language
+ ↓
+Choose "Find a Scheme"
+ ↓
+Select Category
+ ↓
+Search Scheme
+ ↓
+Open Scheme
+ ↓
+Read Benefits
+ ↓
+Check Eligibility
+ ↓
+View Required Documents
+ ↓
+View Application Steps
+ ↓
+Visit Official Website
+
+Another flow:
+
+HOME
+ ↓
+Eligibility Checker
+ ↓
+Answer questions
+ ↓
+Get personalized scheme recommendations
+ ↓
+View Scheme
+ ↓
+Apply through official channel
+
+==================================================
+21. ABOUT PAGE
+==================================================
+
+Create /about.
+
+Explain:
+
+Problem:
+Rural citizens often struggle to discover and understand government schemes because information may be difficult to find, spread across different portals, or unavailable in their preferred language.
+
+Solution:
+GramaSeva brings government-service information into one simple multilingual platform.
+
+Impact:
+
+- Better awareness
+- Easier access
+- Regional-language support
+- Reduced information barriers
+- Better digital inclusion
+
+==================================================
+22. ADMIN DASHBOARD
+==================================================
+
+Create a basic admin interface:
+
+/admin
+
+Admin should be able to:
+
+- View schemes
+- Add scheme
+- Edit scheme
+- Delete/deactivate scheme
+- Update scheme information
+- View total schemes
+- View categories
+
+For the MVP, use a simple demo admin authentication.
+
+Do NOT store passwords in plaintext in a production-like authentication system.
+
+If full authentication is too much for the MVP, clearly mark it as demo authentication.
+
+==================================================
+23. DATABASE API
+==================================================
+
+Create Express APIs:
+
+GET /api/schemes
+
+GET /api/schemes/:id
+
+GET /api/schemes/search?q=
+
+GET /api/categories
+
+GET /api/schemes/category/:category
+
+POST /api/eligibility/check
+
+POST /api/admin/schemes
+
+PUT /api/admin/schemes/:id
+
+DELETE /api/admin/schemes/:id
+
+GET /api/health
+
+Use proper HTTP status codes.
+
+Add validation.
+
+Handle errors gracefully.
+
+==================================================
+24. DATABASE DESIGN
+==================================================
+
+Use SQLite.
+
+Tables:
+
+schemes
+categories
+admin_users
+
+Optional:
+
+feedback
+reports
+
+Use parameterized SQL queries.
+
+Do not build SQL queries using unsafe string concatenation.
+
+==================================================
+25. ERROR HANDLING
+==================================================
+
+Create:
+
+- Loading spinner
+- Empty state
+- API error state
+- 404 page
+- Network error message
+- Form validation
+- Search no-results state
+
+Example:
+
+"We couldn't find any schemes matching your search."
+
+==================================================
+26. RESPONSIVE DESIGN
+==================================================
+
+The application MUST work on:
+
+- Mobile phones
+- Tablets
+- Laptops
+- Desktop
+
+Prioritize mobile because many rural citizens may access the platform from smartphones.
+
+Test:
+
+320px
+375px
+768px
+1024px
+1440px
+
+No horizontal scrolling.
+
+==================================================
+27. SECURITY
+==================================================
+
+Implement basic security best practices:
+
+- CORS configuration
+- Input validation
+- Helmet
+- Environment variables
+- No API secrets in frontend
+- Parameterized database queries
+- Safe error messages
+
+Install helmet.
+
+==================================================
+28. PERFORMANCE
+==================================================
+
+Optimize:
+
+- API requests
+- React rendering
+- Search
+- Images
+- Bundle size
+
+Avoid unnecessary dependencies.
+
+==================================================
+29. DEMO DATA
+==================================================
+
+Populate enough schemes so the website looks realistic.
+
+At least:
+
+10-15 schemes
+
+Across:
+
+Agriculture
+Education
+Health
+Housing
+Employment
+Women & Child
+Pension
+Financial Support
+Skill Development
+
+Include realistic descriptions but clearly distinguish demo content from verified official information.
+
+==================================================
+30. UI DETAILS
+==================================================
+
+Home page sections:
+
+1. Navbar
+2. Hero
+3. Quick Actions
+4. Popular Categories
+5. Featured Schemes
+6. How It Works
+7. Why GramaSeva
+8. Call to Action
+9. Footer
+
+How It Works:
+
+Step 1:
+Choose your language
+
+Step 2:
+Tell us what you need
+
+Step 3:
+Find suitable schemes
+
+Step 4:
+Check eligibility and apply
+
+==================================================
+31. FOOTER
+==================================================
+
+Footer should contain:
+
+GramaSeva
+
+"Government Services, Made Simple."
+
+Links:
+
+Home
+Schemes
+Eligibility
+Assistant
+About
+Accessibility
+Privacy
+
+Include:
+
+"Information is for guidance. Always verify details with the concerned official government department."
+
+==================================================
+32. README
+==================================================
+
+Create a detailed README containing:
+
+Project overview
+Features
+Tech stack
+Folder structure
+Installation
+Environment variables
+Database setup
+Running frontend
+Running backend
+API endpoints
+Future improvements
+
+Commands should be clearly documented.
+
+==================================================
+33. ENVIRONMENT
+==================================================
+
+Create:
+
+.env.example
+
+Include:
+
+PORT=5000
+OPENAI_API_KEY=
+
+Do NOT put actual secrets in the repository.
+
+==================================================
+34. CODE QUALITY
+==================================================
+
+Requirements:
+
+- No placeholder buttons that do nothing.
+- No broken links.
+- No console errors.
+- No missing imports.
+- No unused critical code.
+- No fake loading forever.
+- No lorem ipsum.
+- No unfinished sections.
+- No "coming soon" for core functionality.
+- All navigation should work.
+- All forms should work.
+- Search must work.
+- Language switch must work.
+- Scheme details must work.
+- Eligibility checker must work.
+
+==================================================
+35. FINAL TESTING
+==================================================
+
+Before finishing:
+
+Run the frontend.
+
+Run the backend.
+
+Test:
+
+- Homepage
+- Navigation
+- Language switching
+- Search
+- Category filtering
+- Scheme details
+- Eligibility checker
+- Assistant
+- Voice input where supported
+- Responsive layout
+- API endpoints
+- Database
+- Admin CRUD
+- Error states
+
+Fix all runtime errors.
+
+Make sure the application starts successfully with the documented commands.
+
+==================================================
+36. FINAL HACKATHON POLISH
+==================================================
+
+The final application should feel like a real startup-quality civic-tech product.
+
+Add subtle animations:
+
+- Card hover
+- Button hover
+- Page transitions
+- Smooth scrolling
+
+Do not overuse animations.
+
+Make the first impression impressive.
+
+The homepage should immediately communicate:
+
+WHO:
+Rural citizens
+
+WHAT:
+Government schemes and services
+
+WHY:
+Simple multilingual access
+
+HOW:
+Search + eligibility + assistant
+
+==================================================
+37. IMPORTANT FINAL REQUIREMENT
+==================================================
+
+DO NOT stop after creating the frontend.
+
+Actually create and connect:
+
+React frontend
++
+Express backend
++
+SQLite database
++
+REST APIs
++
+Multilingual system
++
+Search
++
+Eligibility checker
++
+Assistant
++
+Admin CRUD
+
+Make everything work together.
+
+After implementation, give me:
+
+1. Final folder structure
+2. How to run the project
+3. Environment variables required
+4. Main features implemented
+5. API endpoints
+6. Any limitations
+7. Suggestions for future improvements
+
+Start by creating the complete project now.
+Do not ask me unnecessary questions.
+Make sensible technical decisions and continue until the application is runnable.

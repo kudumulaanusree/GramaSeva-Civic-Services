@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #1b6f48;
+  --color-dark: #134e35;
+  --color-cream: #fbfaf5;
+  --color-sand: #f4f1ea;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #1e293b;
+  background-color: #fbfaf5;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, .font-display {
+  font-family: 'Outfit', 'Inter', sans-serif;
+}
+
+/* Accessibility: Large Text Mode */
+.large-text {
+  font-size: 1.15rem;
+}
+
+.large-text h1 {
+  font-size: 2.75rem !important;
+}
+
+.large-text h2 {
+  font-size: 2.25rem !important;
+}
+
+.large-text h3 {
+  font-size: 1.75rem !important;
+}
+
+.large-text p, .large-text span, .large-text button, .large-text input, .large-text select {
+  font-size: 1.15rem !important;
+}
+
+/* Accessibility: High Contrast Mode */
+.high-contrast {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+.high-contrast nav, .high-contrast header, .high-contrast footer {
+  background-color: #0a0a0a !important;
+  border-color: #ffffff !important;
+  color: #ffffff !important;
+}
+
+.high-contrast .card, .high-contrast article, .high-contrast section, .high-contrast div.bg-white, .high-contrast .bg-gov-cream, .high-contrast .bg-gov-sand {
+  background-color: #121212 !important;
+  border: 2px solid #ffffff !important;
+  color: #ffffff !important;
+}
+
+.high-contrast a, .high-contrast button {
+  color: #ffff00 !important;
+}
+
+.high-contrast button.bg-gov-primary, .high-contrast button.bg-emerald-700 {
+  background-color: #ffff00 !important;
+  color: #000000 !important;
+  font-weight: bold !important;
+}
+
+.high-contrast input, .high-contrast select, .high-contrast textarea {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border: 2px solid #ffffff !important;
+}
+
+/* Smooth Focus States for Keyboard Navigation */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 3px solid #d97706;
+  outline-offset: 2px;
+}
+
+/* Animation utilities */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}

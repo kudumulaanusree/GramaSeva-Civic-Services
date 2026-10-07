@@ -11,6 +11,8 @@ import {
 
 const API_BASE = import.meta.env.VITE_API_URL || "/api";
 
+import { categoriesList, seedSchemes } from "../data/mockData";
+
 export async function fetchSchemes(params?: {
   q?: string;
   category?: string;
@@ -21,27 +23,61 @@ export async function fetchSchemes(params?: {
   if (params?.category) query.set("category", params.category);
   if (params?.sort) query.set("sort", params.sort);
 
-  const res = await fetch(`${API_BASE}/schemes?${query.toString()}`);
-  if (!res.ok) throw new Error("Failed to load schemes");
-  return res.json();
+  try {
+    const res = await fetch(`${API_BASE}/schemes?${query.toString()}`);
+    if (!res.ok) throw new Error("Failed to load schemes");
+    return res.json();
+  } catch (error) {
+    console.warn("Backend not reachable, falling back to mock data");
+    
+    // Fallback logic using mock data
+    let filtered = [...seedSchemes] as unknown as Scheme[];
+    if (params?.category) {
+      filtered = filtered.filter(s => s.category === params.category);
+    }
+    if (params?.q) {
+      const q = params.q.toLowerCase();
+      filtered = filtered.filter(s => 
+        s.name.toLowerCase().includes(q) || 
+        s.summary.toLowerCase().includes(q) ||
+        s.keywords.some((k: string) => k.toLowerCase().includes(q))
+      );
+    }
+    return filtered;
+  }
 }
 
 export async function fetchSchemeById(id: string): Promise<Scheme> {
-  const res = await fetch(`${API_BASE}/schemes/${id}`);
-  if (!res.ok) throw new Error("Failed to load scheme details");
-  return res.json();
+  try {
+    const res = await fetch(`${API_BASE}/schemes/${id}`);
+    if (!res.ok) throw new Error("Failed to load scheme details");
+    return res.json();
+  } catch (error) {
+    const scheme = seedSchemes.find((s) => s.id === id);
+    if (!scheme) throw new Error("Scheme not found in mock data");
+    return scheme as unknown as Scheme;
+  }
 }
 
 export async function searchSchemes(q: string): Promise<Scheme[]> {
-  const res = await fetch(`${API_BASE}/schemes/search?q=${encodeURIComponent(q)}`);
-  if (!res.ok) throw new Error("Failed to search schemes");
-  return res.json();
+  try {
+    const res = await fetch(`${API_BASE}/schemes/search?q=${encodeURIComponent(q)}`);
+    if (!res.ok) throw new Error("Failed to search schemes");
+    return res.json();
+  } catch (error) {
+    return fetchSchemes({ q });
+  }
 }
 
 export async function fetchCategories(): Promise<Category[]> {
-  const res = await fetch(`${API_BASE}/categories`);
-  if (!res.ok) throw new Error("Failed to load categories");
-  return res.json();
+  try {
+    const res = await fetch(`${API_BASE}/categories`);
+    if (!res.ok) throw new Error("Failed to load categories");
+    return res.json();
+  } catch (error) {
+    console.warn("Backend not reachable, falling back to mock categories");
+    return categoriesList;
+  }
 }
 
 export async function checkEligibility(
